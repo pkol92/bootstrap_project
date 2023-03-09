@@ -25,9 +25,7 @@ export const FoodCard: FC<FoodCardProps> = ({ item, setOrdered }) => {
     <Card className='h-100 shadow-sm bg-white rounded' key={item.id}>
       <Card.Body className='d-flex mb-1 flex-column'>
         <Card.Title>{item.name}</Card.Title>
-        <Badge pill className='mb-1 bg-yellow'>
-          {item.price}$
-        </Badge>
+        <Badge className='mb-1 bg-warning'>{item.price}$</Badge>
         <Button
           onClick={() => setOrdered()}
           className='mt-auto font-weight-bold'
