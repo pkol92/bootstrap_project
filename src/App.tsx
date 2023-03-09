@@ -7,6 +7,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { Confirmation } from './components/Confirmation';
 import { useState } from 'react';
 import { mockData } from './components/mockData';
+import { Menu } from './components/Menu';
 
 function App() {
   const [toggle, setToggle] = useState(false);
@@ -20,15 +21,18 @@ function App() {
   };
 
   return (
-    <Container className='mb-4'>
-      <Row className='d-flex align-content-center justify-content-lg-center'>
-        {mockData.map((item) => (
-          <Col key={item.id} xs={12} md={6} lg={2} className='mb-4'>
-            <FoodCard item={item} setOrdered={() => displayConfirmation()} />
-          </Col>
-        ))}
-      </Row>
-      {toggle && <Confirmation toggle={setToggle} />}
+    <Container>
+      <Menu />
+      <Container>
+        <Row className='d-flex align-content-center justify-content-lg-center'>
+          {mockData.map((item) => (
+            <Col key={item.id} xs={12} md={6} lg={2} className='mb-4'>
+              <FoodCard item={item} setOrdered={() => displayConfirmation()} />
+            </Col>
+          ))}
+        </Row>
+        {toggle && <Confirmation toggle={setToggle} />}
+      </Container>
     </Container>
   );
 }

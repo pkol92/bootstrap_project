@@ -19,7 +19,7 @@ export const FoodCard: FC<FoodCardProps> = ({ item, setOrdered }) => {
       <Card.Body className='d-flex mb-2 flex-column'>
         <Card.Title className=' mb-3 d-flex justify-content-between'>
           <Card.Title className='mb-1 mt-auto'>{item.name}</Card.Title>
-          <Badge pill className='mb-1 bg-warning mt-auto'>
+          <Badge pill className='mb-1 bg-warning d-flex align-self-start'>
             {item.price}$
           </Badge>
         </Card.Title>
