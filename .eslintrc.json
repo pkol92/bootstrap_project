@@ -4,7 +4,6 @@
     "es2021": true
   },
   "extends": [
-    "next/core-web-vitals",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
@@ -20,6 +19,6 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "no-duplicate-imports": "error",
-    "unused-imports/no-unused-imports": "error"
+    "no-empty-function": "warn"
   }
 }
