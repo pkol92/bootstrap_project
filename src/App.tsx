@@ -21,9 +21,9 @@ function App() {
   };
 
   return (
-    <Container>
+    <Container fluid className='g-0'>
       <Menu />
-      <Container>
+      <Container className='mt-5'>
         <Row className='d-flex align-content-center justify-content-lg-center'>
           {mockData.map((item) => (
             <Col key={item.id} xs={12} md={6} lg={2} className='mb-4'>
