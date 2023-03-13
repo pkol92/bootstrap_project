@@ -1,15 +1,9 @@
 import React, { FC } from 'react';
 import { Card, Button, Badge } from 'react-bootstrap';
-
-type ItemProps = {
-  id: number;
-  name: string;
-  price: string;
-  description: string;
-};
+import { Product } from '../types';
 
 interface FoodCardProps {
-  item: ItemProps;
+  item: Product;
   setOrdered: () => void;
 }
 
