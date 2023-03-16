@@ -1,16 +1,30 @@
 import React from 'react';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Badge, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { useAuthContext } from '../context/authContext';
 
 import { ReactComponent as CardShopping } from '../icons/cart-shopping.svg';
 
 export const Menu = () => {
+  const { user } = useAuthContext();
+  console.log(user);
   return (
     <Navbar variant='dark' bg='dark' expand='lg'>
       <Container fluid className='px-4'>
         <Navbar.Brand href='#home'>PizzaLove</Navbar.Brand>
 
-        <Nav className='ms-auto pe-2'>
-          <CardShopping width='18px' />
+        <Nav className='ms-auto pe-4'>
+          <div style={{ position: 'relative' }}>
+            <CardShopping width='18px' />
+            {user && user?.products.length > 0 && (
+              <Badge
+                pill
+                bg='warning'
+                text='dark'
+                style={{ fontSize: '8px', position: 'absolute' }}>
+                {user?.products.length}
+              </Badge>
+            )}
+          </div>
         </Nav>
         <Navbar.Toggle aria-controls='responsive-navbar-dark-example' />
         <Navbar.Collapse

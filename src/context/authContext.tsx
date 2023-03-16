@@ -31,7 +31,7 @@ type AuthContextType = {
 };
 
 export const AuthContext = createContext<AuthContextType>({
-  user: null,
+  user: mockUser,
   isLoading: false,
   logout: () => {},
   login: (token: string) => {},
@@ -41,6 +41,9 @@ export const AuthContext = createContext<AuthContextType>({
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<UserState | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  // const [products, setProducts] = useState<Array<Product | null>>(() =>
+  //   user ? user.products : []
+  // );
 
   const login = (token: string) => {
     localStorage.setItem(LOCALSTORAGE_KEY_NAME, token);
@@ -61,8 +64,11 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const addProduct = (newProduct: Product) => {
+    // setProducts([...products, newProduct]);
+    console.log('cos');
     if (user) {
       setUser({ ...user, products: [...user.products, newProduct] });
+      console.log('done');
     }
   };
 

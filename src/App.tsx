@@ -8,10 +8,12 @@ import { Confirmation } from './components/Confirmation';
 import { useState } from 'react';
 import { mockData } from './mocks/mockData';
 import { Menu } from './components/Menu';
-import { AuthContextProvider } from './context/authContext';
+import { AuthContextProvider, useAuthContext } from './context/authContext';
+import { Product } from './types';
 
 function App() {
   const [toggle, setToggle] = useState(false);
+  const { user, addProduct } = useAuthContext();
 
   const displayConfirmation = () => {
     setToggle(true);
@@ -19,6 +21,12 @@ function App() {
     setTimeout(() => {
       setToggle(false);
     }, 2000);
+  };
+
+  const handleOrder = (item: Product) => {
+    displayConfirmation();
+    addProduct(item);
+    console.log(item);
   };
 
   return (
@@ -29,10 +37,7 @@ function App() {
           <Row className='d-flex align-content-center justify-content-xxl-center'>
             {mockData.map((item) => (
               <Col key={item.id} xs={12} md={6} lg={3} className='mb-4'>
-                <FoodCard
-                  item={item}
-                  setOrdered={() => displayConfirmation()}
-                />
+                <FoodCard item={item} setOrdered={() => handleOrder(item)} />
               </Col>
             ))}
           </Row>

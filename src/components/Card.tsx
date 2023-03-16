@@ -20,7 +20,7 @@ export const FoodCard: FC<FoodCardProps> = ({ item, setOrdered }) => {
 
         <Card.Text>{item.description}</Card.Text>
         <Button
-          onClick={() => setOrdered()}
+          onClick={() => setOrdered}
           className='mt-auto font-weight-bold'
           variant='success'>
           Order
