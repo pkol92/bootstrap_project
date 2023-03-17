@@ -1,5 +1,6 @@
 import React from 'react';
 import { Badge, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
 
 import { ReactComponent as CardShopping } from '../icons/cart-shopping.svg';
@@ -13,7 +14,7 @@ export const Menu = () => {
         <Navbar.Brand href='#home'>PizzaLove</Navbar.Brand>
 
         <Nav className='ms-auto pe-4'>
-          <div style={{ position: 'relative' }}>
+          <Link style={{ position: 'relative' }} to='/my-card'>
             <CardShopping width='18px' />
             {user && user?.products.length > 0 && (
               <Badge
@@ -24,7 +25,7 @@ export const Menu = () => {
                 +{user?.products.length}
               </Badge>
             )}
-          </div>
+          </Link>
         </Nav>
         <Navbar.Toggle aria-controls='responsive-navbar-dark-example' />
         <Navbar.Collapse
