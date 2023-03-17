@@ -6,7 +6,7 @@ import { ReactComponent as CardShopping } from '../icons/cart-shopping.svg';
 
 export const Menu = () => {
   const { user } = useAuthContext();
-  console.log(user);
+
   return (
     <Navbar variant='dark' bg='dark' expand='lg'>
       <Container fluid className='px-4'>
@@ -21,7 +21,7 @@ export const Menu = () => {
                 bg='warning'
                 text='dark'
                 style={{ fontSize: '8px', position: 'absolute' }}>
-                {user?.products.length}
+                +{user?.products.length}
               </Badge>
             )}
           </div>

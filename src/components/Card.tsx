@@ -4,7 +4,7 @@ import { Product } from '../types';
 
 interface FoodCardProps {
   item: Product;
-  setOrdered: () => void;
+  setOrdered: (item: Product) => void;
 }
 
 export const FoodCard: FC<FoodCardProps> = ({ item, setOrdered }) => {
@@ -20,7 +20,7 @@ export const FoodCard: FC<FoodCardProps> = ({ item, setOrdered }) => {
 
         <Card.Text>{item.description}</Card.Text>
         <Button
-          onClick={() => setOrdered}
+          onClick={() => setOrdered(item)}
           className='mt-auto font-weight-bold'
           variant='success'>
           Order

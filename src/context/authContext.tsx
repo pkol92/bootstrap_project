@@ -24,7 +24,6 @@ const getTokenFromLocalStorage = () => {
 
 type AuthContextType = {
   user: UserState | null;
-  isLoading: boolean;
   logout: () => void;
   login: (access_token: string) => void;
   addProduct: (newProduct: Product) => void;
@@ -32,15 +31,14 @@ type AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>({
   user: mockUser,
-  isLoading: false,
   logout: () => {},
   login: (token: string) => {},
   addProduct: (newProduct: Product) => {},
 });
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [user, setUser] = useState<UserState | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<UserState | null>(mockUser);
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
   // const [products, setProducts] = useState<Array<Product | null>>(() =>
   //   user ? user.products : []
   // );
@@ -52,7 +50,6 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     const token = getTokenFromLocalStorage();
-    setIsLoading(false);
     if (token) {
       login(token);
     }
@@ -73,8 +70,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, isLoading, login, logout, addProduct }}>
+    <AuthContext.Provider value={{ user, login, logout, addProduct }}>
       {children}
     </AuthContext.Provider>
   );
