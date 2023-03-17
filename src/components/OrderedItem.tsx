@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import { useAuthContext } from '../context/authContext';
 import { Product } from '../types';
 
 export const OrderedItem = memo(function OrderITem({
@@ -13,7 +14,8 @@ export const OrderedItem = memo(function OrderITem({
     return (price * amount).toFixed(2);
   }, []);
 
-  const [amount, setAmount] = useState(item.amount);
+  const { changeAmount } = useAuthContext();
+  // const [amount, setAmount] = useState(item.amount);
 
   return (
     <tr key={item.id}>
@@ -21,17 +23,17 @@ export const OrderedItem = memo(function OrderITem({
       <td>{item.price.toFixed(2)}$</td>
       <td>
         <input
-          defaultValue={amount}
+          defaultValue={item.amount}
           min={1}
           max={99}
           step={1}
           type='number'
           onChange={(e) => {
-            setAmount(+e.target.value);
+            changeAmount(item, +e.target.value);
           }}
         />
       </td>
-      <td>{memoCalculatePrice(item.price, amount)}$</td>
+      <td>{memoCalculatePrice(item.price, item.amount)}$</td>
       <td>
         <Button
           onClick={() => deleteItem(item)}

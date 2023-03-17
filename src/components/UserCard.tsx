@@ -10,6 +10,13 @@ interface UserCardProps {
 }
 
 export const UserCard: FC<UserCardProps> = ({ items, deleteItem }) => {
+  // const [sum, setSum] = useState()
+
+  let sum = 0;
+  for (let i = 0; i < items.length; i++) {
+    const productSum = items[i].price * items[i].amount;
+    sum += productSum;
+  }
   return (
     <Table striped>
       <thead>
@@ -28,7 +35,7 @@ export const UserCard: FC<UserCardProps> = ({ items, deleteItem }) => {
           <td>Total price</td>
           <td></td>
           <td></td>
-          <td></td>
+          <td>{sum.toFixed(2)}</td>
         </tr>
       </tbody>
     </Table>

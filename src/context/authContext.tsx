@@ -28,6 +28,7 @@ type AuthContextType = {
   login: (access_token: string) => void;
   addProduct: (newProduct: Product) => void;
   deleteProduct: (product: Product) => void;
+  changeAmount: (product: Product, amount: number) => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -36,6 +37,7 @@ export const AuthContext = createContext<AuthContextType>({
   login: (token: string) => {},
   addProduct: (newProduct: Product) => {},
   deleteProduct: (product: Product) => {},
+  changeAmount: (product: Product, amount: number) => {},
 });
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -77,11 +79,24 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
           ? (searchProduct.amount! += 1)
           : newProduct.amount,
       };
-      console.log(amountItem);
       const products = [...filteredProducts, amountItem];
-      // console.log(products);
       setUser({ ...user, products: products });
-      console.log('done');
+    }
+  };
+
+  const changeAmount = (product: Product, amount: number) => {
+    if (user) {
+      const productIndex = user.products.indexOf(product);
+
+      const amountItem: Product = {
+        ...product,
+        amount: (product.amount = amount),
+      };
+
+      const updateProducts = [...user.products];
+      updateProducts.splice(productIndex, 1, amountItem);
+
+      setUser({ ...user, products: updateProducts });
     }
   };
 
@@ -95,7 +110,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, addProduct, deleteProduct }}>
+      value={{ user, login, logout, addProduct, deleteProduct, changeAmount }}>
       {children}
     </AuthContext.Provider>
   );
