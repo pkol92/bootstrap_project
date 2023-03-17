@@ -3,6 +3,7 @@ export type Product = {
   name: string;
   price: number;
   description: string;
+  amount: number;
 };
 
 export type UserState = {
@@ -10,5 +11,5 @@ export type UserState = {
   email: string;
   id: number;
   name: string;
-  products: Array<Product | null>;
+  products: Array<Product>;
 };

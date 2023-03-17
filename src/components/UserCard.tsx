@@ -1,31 +1,36 @@
-import React, { FC } from 'react';
-import { Card, Badge, Button } from 'react-bootstrap';
+import React, { FC, useCallback, useMemo } from 'react';
+import { Card, Badge, Button, Table } from 'react-bootstrap';
+import { useAuthContext } from '../context/authContext';
 import { Product } from '../types';
+import { OrderedItem } from './OrderedItem';
 
 interface UserCardProps {
-  item: Product;
+  items: Array<Product>;
   deleteItem: (item: Product) => void;
 }
 
-export const UserCard: FC<UserCardProps> = ({ item, deleteItem }) => {
+export const UserCard: FC<UserCardProps> = ({ items, deleteItem }) => {
   return (
-    <Card className='h-100 shadow-sm bg-white rounded' key={item.id}>
-      <Card.Body className='d-flex mb-2 flex-column'>
-        <Card.Title className=' mb-3 d-flex justify-content-between'>
-          <Card.Title className='mb-1 mt-auto'>{item.name}</Card.Title>
-          <Badge pill className='mb-1 bg-warning d-flex align-self-start'>
-            {item.price}$
-          </Badge>
-        </Card.Title>
-
-        <Card.Text>{item.description}</Card.Text>
-        <Button
-          onClick={() => deleteItem(item)}
-          className='mt-auto font-weight-bold'
-          variant='success'>
-          Remove
-        </Button>
-      </Card.Body>
-    </Card>
+    <Table striped>
+      <thead>
+        <tr>
+          <th>Dish</th>
+          <th>Price</th>
+          <th>Amount</th>
+          <th>Total price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {items.map((item) => (
+          <OrderedItem key={item.id} item={item} deleteItem={deleteItem} />
+        ))}
+        <tr>
+          <td>Total price</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </Table>
   );
 };

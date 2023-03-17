@@ -64,7 +64,23 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const addProduct = (newProduct: Product) => {
     if (user) {
-      setUser({ ...user, products: [...user.products, newProduct] });
+      const searchProduct = user.products.find(
+        (item) => item.id === newProduct.id
+      );
+      const filteredProducts = user.products.filter(
+        (item) => item?.id !== newProduct.id
+      );
+
+      const amountItem: Product = {
+        ...newProduct,
+        amount: searchProduct
+          ? (searchProduct.amount! += 1)
+          : newProduct.amount,
+      };
+      console.log(amountItem);
+      const products = [...filteredProducts, amountItem];
+      // console.log(products);
+      setUser({ ...user, products: products });
       console.log('done');
     }
   };
@@ -72,8 +88,8 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const deleteProduct = (product: Product) => {
     if (user) {
       const products = user.products.filter((item) => item?.id !== product.id);
+
       setUser({ ...user, products: products });
-      console.log('done');
     }
   };
 
