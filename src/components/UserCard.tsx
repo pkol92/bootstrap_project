@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
-import { Card, Button, Badge } from 'react-bootstrap';
+import { Card, Badge, Button } from 'react-bootstrap';
 import { Product } from '../types';
 
-interface FoodCardProps {
+interface UserCardProps {
   item: Product;
-  addItem: (item: Product) => void;
+  deleteItem: (item: Product) => void;
 }
 
-export const FoodCard: FC<FoodCardProps> = ({ item, addItem }) => {
+export const UserCard: FC<UserCardProps> = ({ item, deleteItem }) => {
   return (
     <Card className='h-100 shadow-sm bg-white rounded' key={item.id}>
       <Card.Body className='d-flex mb-2 flex-column'>
@@ -20,10 +20,10 @@ export const FoodCard: FC<FoodCardProps> = ({ item, addItem }) => {
 
         <Card.Text>{item.description}</Card.Text>
         <Button
-          onClick={() => addItem(item)}
+          onClick={() => deleteItem(item)}
           className='mt-auto font-weight-bold'
           variant='success'>
-          Order
+          Remove
         </Button>
       </Card.Body>
     </Card>

@@ -27,7 +27,7 @@ export const FoodPage = () => {
       <Row className='d-flex align-content-center justify-content-xxl-center'>
         {mockData.map((item) => (
           <Col key={item.id} xs={12} md={6} lg={3} className='mb-4'>
-            <FoodCard item={item} setOrdered={() => handleOrder(item)} />
+            <FoodCard item={item} addItem={() => handleOrder(item)} />
           </Col>
         ))}
       </Row>

@@ -11,7 +11,7 @@ export const Menu = () => {
   return (
     <Navbar variant='dark' bg='dark' expand='lg'>
       <Container fluid className='px-4'>
-        <Navbar.Brand href='#home'>PizzaLove</Navbar.Brand>
+        <Navbar.Brand href='/'>PizzaLove</Navbar.Brand>
 
         <Nav className='ms-auto pe-4'>
           <Link style={{ position: 'relative' }} to='/my-card'>

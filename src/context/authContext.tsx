@@ -27,6 +27,7 @@ type AuthContextType = {
   logout: () => void;
   login: (access_token: string) => void;
   addProduct: (newProduct: Product) => void;
+  deleteProduct: (product: Product) => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -34,6 +35,7 @@ export const AuthContext = createContext<AuthContextType>({
   logout: () => {},
   login: (token: string) => {},
   addProduct: (newProduct: Product) => {},
+  deleteProduct: (product: Product) => {},
 });
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -61,16 +63,23 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const addProduct = (newProduct: Product) => {
-    // setProducts([...products, newProduct]);
-    console.log('cos');
     if (user) {
       setUser({ ...user, products: [...user.products, newProduct] });
       console.log('done');
     }
   };
 
+  const deleteProduct = (product: Product) => {
+    if (user) {
+      const products = user.products.filter((item) => item?.id !== product.id);
+      setUser({ ...user, products: products });
+      console.log('done');
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, addProduct }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, addProduct, deleteProduct }}>
       {children}
     </AuthContext.Provider>
   );
