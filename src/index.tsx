@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { AuthContextProvider } from './context/authContext';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { UserCardPage } from './features/UserCardPage';
+import { RegisterFormPage } from './features/RegisterFormPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
     path: '/my-card',
     element: <UserCardPage />,
   },
+  { path: '/register', element: <RegisterFormPage /> },
 ]);
 
 root.render(

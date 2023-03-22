@@ -10,8 +10,6 @@ interface UserCardProps {
 }
 
 export const UserCard: FC<UserCardProps> = ({ items, deleteItem }) => {
-  // const [sum, setSum] = useState()
-
   let sum = 0;
   for (let i = 0; i < items.length; i++) {
     const productSum = items[i].price * items[i].amount;

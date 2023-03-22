@@ -12,9 +12,11 @@ export const Menu = () => {
     <Navbar variant='dark' bg='dark' expand='lg'>
       <Container fluid className='px-4'>
         <Navbar.Brand href='/'>PizzaLove</Navbar.Brand>
-
+        <Nav>
+          <Nav.Link href='/register'>Register</Nav.Link>
+        </Nav>
         <Nav className='ms-auto pe-4'>
-          <Link style={{ position: 'relative' }} to='/my-card'>
+          <Nav.Link style={{ position: 'relative' }} href='/my-card'>
             <CardShopping width='18px' />
             {user && user?.products.length > 0 && (
               <Badge
@@ -25,7 +27,7 @@ export const Menu = () => {
                 +{user?.products.length}
               </Badge>
             )}
-          </Link>
+          </Nav.Link>
         </Nav>
         <Navbar.Toggle aria-controls='responsive-navbar-dark-example' />
         <Navbar.Collapse

@@ -42,10 +42,6 @@ export const AuthContext = createContext<AuthContextType>({
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<UserState | null>(mockUser);
-  // const [isLoading, setIsLoading] = useState<boolean>(true);
-  // const [products, setProducts] = useState<Array<Product | null>>(() =>
-  //   user ? user.products : []
-  // );
 
   const login = (token: string) => {
     localStorage.setItem(LOCALSTORAGE_KEY_NAME, token);
