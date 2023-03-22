@@ -4,8 +4,9 @@ import { americanStates } from '../mocks/americanStates';
 
 export const RegisterForm = () => {
   return (
-    <Form className='m-3 mt-5'>
-      <h3 className='mb-4 mb-md-5 '>Register Form</h3>
+    <Form className='m-md-3 mt-md-5 p-4'>
+      <h3 className='mb-4'>Register Form</h3>
+      <hr />
       <Row className='mb-3'>
         <Col md={3} className='mb-3'>
           <h6>Personal data</h6>
@@ -30,9 +31,14 @@ export const RegisterForm = () => {
               <Form.Label>Last name</Form.Label>
               <Form.Control placeholder='Doe' type='text' />
             </Form.Group>
+            <Form.Group as={Col} controlId='ControlTextarea' className='mb-3'>
+              <Form.Label>About you</Form.Label>
+              <Form.Control as='textarea' rows={4} />
+            </Form.Group>
           </Row>
         </Col>
       </Row>
+      <hr />
 
       <Row className='mb-3'>
         <Col md={3} className='mb-3'>
@@ -73,7 +79,7 @@ export const RegisterForm = () => {
           </Row>
         </Col>
       </Row>
-
+      <hr />
       <Row className='mb-3'>
         <Col md={3} className='mb-3'>
           <h6>Login data</h6>

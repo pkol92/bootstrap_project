@@ -7,7 +7,10 @@ export const RegisterFormPage = () => {
   return (
     <Container fluid className='g-0'>
       <Menu />
-      <Container className='d-flex justify-content-center'>
+      <Container
+        fluid
+        className='d-flex justify-content-center g-0'
+        id='registerFormContainer'>
         <RegisterForm />
       </Container>
     </Container>
