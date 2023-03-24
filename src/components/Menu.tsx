@@ -10,10 +10,13 @@ export const Menu = () => {
 
   return (
     <Navbar variant='dark' bg='dark' expand='lg'>
-      <Container fluid className='px-4'>
+      <Container fluid className='px-4 gap-4'>
         <Navbar.Brand href='/'>PizzaLove</Navbar.Brand>
         <Nav>
           <Nav.Link href='/register'>Register</Nav.Link>
+        </Nav>
+        <Nav>
+          <Nav.Link href='/login'>Login</Nav.Link>
         </Nav>
         <Nav className='ms-auto pe-4'>
           <Nav.Link style={{ position: 'relative' }} href='/my-card'>

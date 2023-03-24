@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/esm/Container';
 import { Menu } from '../components/Menu';
 import { RegisterForm } from '../components/RegisterForm';
 
-export const RegisterFormPage = () => {
+export const RegisterPage = () => {
   return (
     <Container fluid className='g-0'>
       <Menu />
