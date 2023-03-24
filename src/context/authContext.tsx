@@ -32,7 +32,7 @@ type AuthContextType = {
 };
 
 export const AuthContext = createContext<AuthContextType>({
-  user: mockUser,
+  user: null,
   logout: () => {},
   login: (token: string) => {},
   addProduct: (newProduct: Product) => {},
@@ -41,7 +41,7 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [user, setUser] = useState<UserState | null>(mockUser);
+  const [user, setUser] = useState<UserState | null>(null);
 
   const login = (token: string) => {
     localStorage.setItem(LOCALSTORAGE_KEY_NAME, token);
