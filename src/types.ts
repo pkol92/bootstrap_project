@@ -7,7 +7,7 @@ export type Product = {
 };
 
 export type UserState = {
-  token: string;
+  password: string;
   email: string;
   id: number;
   name: string;

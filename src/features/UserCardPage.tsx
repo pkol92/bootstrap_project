@@ -7,6 +7,7 @@ import { useAuthContext } from '../context/authContext';
 
 export const UserCardPage = () => {
   const { user, deleteProduct } = useAuthContext();
+  console.log(user?.products);
   return (
     <>
       <Menu />

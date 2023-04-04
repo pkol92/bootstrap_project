@@ -5,7 +5,7 @@ import { useAuthContext } from '../context/authContext';
 import { ReactComponent as CardShopping } from '../icons/cart-shopping.svg';
 
 export const Menu = () => {
-  const { user } = useAuthContext();
+  const { user, logout } = useAuthContext();
 
   return (
     <Navbar variant='dark' bg='dark' expand='lg'>
@@ -24,10 +24,10 @@ export const Menu = () => {
 
         {user && (
           <>
-            {user?.products.length > 0 && (
-              <Nav className='ms-auto pe-4'>
-                <Nav.Link style={{ position: 'relative' }} href='/my-card'>
-                  <CardShopping width='18px' />
+            <Nav className='ms-auto'>
+              <Nav.Link style={{ position: 'relative' }} href='/my-card'>
+                <CardShopping width='18px' />
+                {user.products.length > 0 && (
                   <Badge
                     pill
                     bg='warning'
@@ -35,9 +35,9 @@ export const Menu = () => {
                     style={{ fontSize: '8px', position: 'absolute' }}>
                     +{user?.products.length}
                   </Badge>
-                </Nav.Link>
-              </Nav>
-            )}
+                )}
+              </Nav.Link>
+            </Nav>
 
             <Navbar.Toggle aria-controls='responsive-navbar-dark-example' />
             <Navbar.Collapse
@@ -57,7 +57,9 @@ export const Menu = () => {
                   </NavDropdown.Item>
 
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href='#action/3.3'>Logout</NavDropdown.Item>
+                  <NavDropdown.Item href='#action/3.3' onClick={() => logout()}>
+                    Logout
+                  </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>

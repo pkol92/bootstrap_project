@@ -4,5 +4,6 @@ export const mockUser = {
     'dewfefjewodnwednkweh32iu4y3e.dejwdnwndkejwdn3r2r.ihucfewhfkwendfjw3424',
   email: 'john@wp.pl',
   name: 'John',
+  password: 'password',
   products: [],
 };
