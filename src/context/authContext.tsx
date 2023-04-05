@@ -46,6 +46,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const login = (email: string, password: string) => {
     if (email === mockUser.email && password === mockUser.password) {
       localStorage.setItem(LOCALSTORAGE_KEY_NAME, mockUser.email);
+      console.log('user login');
       setUser(mockUser);
     }
   };
