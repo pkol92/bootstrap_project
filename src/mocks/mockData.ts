@@ -25,7 +25,7 @@ export const mockData: Array<Product> = [
   {
     id: 4,
     name: 'Onion soup',
-    price: 3.0,
+    price: 3.49,
     description: 'Tasty food, Tasty food, Tasty food, Tasty food',
     amount: 1,
   },

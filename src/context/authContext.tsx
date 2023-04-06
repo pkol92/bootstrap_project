@@ -12,9 +12,9 @@ import {
 import { mockUser } from '../mocks/moskUser';
 import { Product, UserState } from '../types';
 
-const LOCALSTORAGE_KEY_NAME = 'token';
+const LOCALSTORAGE_KEY_NAME = 'email';
 
-const getTokenFromLocalStorage = () => {
+const getDataFromLocalStorage = () => {
   if (typeof window !== 'undefined') {
     return localStorage.getItem(LOCALSTORAGE_KEY_NAME);
   } else {
@@ -25,7 +25,7 @@ const getTokenFromLocalStorage = () => {
 type AuthContextType = {
   user: UserState | null;
   logout: () => void;
-  login: (access_token: string) => void;
+  login: (email: string, password: string) => void;
   addProduct: (newProduct: Product) => void;
   deleteProduct: (product: Product) => void;
   changeAmount: (product: Product, amount: number) => void;
@@ -34,7 +34,7 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   logout: () => {},
-  login: (token: string) => {},
+  login: (email: string, password: string) => {},
   addProduct: (newProduct: Product) => {},
   deleteProduct: (product: Product) => {},
   changeAmount: (product: Product, amount: number) => {},
@@ -43,15 +43,17 @@ export const AuthContext = createContext<AuthContextType>({
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<UserState | null>(null);
 
-  const login = (token: string) => {
-    localStorage.setItem(LOCALSTORAGE_KEY_NAME, token);
-    setUser(mockUser);
+  const login = (email: string, password: string) => {
+    if (email === mockUser.email && password === mockUser.password) {
+      localStorage.setItem(LOCALSTORAGE_KEY_NAME, mockUser.email);
+      setUser(mockUser);
+    }
   };
 
   useEffect(() => {
-    const token = getTokenFromLocalStorage();
-    if (token) {
-      login(token);
+    const userEmail = getDataFromLocalStorage();
+    if (userEmail === mockUser.email) {
+      login(mockUser.email, mockUser.password);
     }
   }, []);
 
@@ -69,12 +71,12 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         (item) => item?.id !== newProduct.id
       );
 
-      const amountItem: Product = {
-        ...newProduct,
-        amount: searchProduct
-          ? (searchProduct.amount! += 1)
-          : newProduct.amount,
-      };
+      const amountItem: Product = searchProduct
+        ? {
+            ...newProduct,
+            amount: (searchProduct.amount += 1),
+          }
+        : newProduct;
       const products = [...filteredProducts, amountItem];
       setUser({ ...user, products: products });
     }

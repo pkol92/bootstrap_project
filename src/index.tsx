@@ -5,7 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import { AuthContextProvider } from './context/authContext';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from 'react-router-dom';
 import { UserCardPage } from './features/UserCardPage';
 import { RegisterPage } from './features/RegisterPage';
 import { LoginPage } from './features/LoginPage';

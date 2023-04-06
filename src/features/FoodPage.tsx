@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { FoodCard } from '../components/Card';
 import { Confirmation } from '../components/Confirmation';
 import { useAuthContext } from '../context/authContext';
@@ -9,6 +10,8 @@ import { Product } from '../types';
 export const FoodPage = () => {
   const [toggle, setToggle] = useState(false);
   const { addProduct } = useAuthContext();
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   const displayConfirmation = () => {
     setToggle(true);
@@ -19,8 +22,12 @@ export const FoodPage = () => {
   };
 
   const handleOrder = (item: Product) => {
-    displayConfirmation();
-    addProduct(item);
+    if (!user) {
+      navigate('/login');
+    } else {
+      displayConfirmation();
+      addProduct(item);
+    }
   };
   return (
     <Container className='mt-5'>

@@ -1,7 +1,8 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import { useAuthContext } from '../context/authContext';
 import { Product } from '../types';
+import { ReactComponent as RemoveIcon } from '../icons/remove-icon.svg';
 
 export const OrderedItem = memo(function OrderITem({
   item,
@@ -15,7 +16,6 @@ export const OrderedItem = memo(function OrderITem({
   }, []);
 
   const { changeAmount } = useAuthContext();
-  // const [amount, setAmount] = useState(item.amount);
 
   return (
     <tr key={item.id}>
@@ -34,12 +34,9 @@ export const OrderedItem = memo(function OrderITem({
         />
       </td>
       <td>{memoCalculatePrice(item.price, item.amount)}$</td>
-      <td>
-        <Button
-          onClick={() => deleteItem(item)}
-          className='mt-auto font-weight-bold'
-          variant='dark'>
-          Remove
+      <td className='mt-auto font-weight-bold'>
+        <Button onClick={() => deleteItem(item)} variant='link' size='sm'>
+          <RemoveIcon width={13} height={13} />
         </Button>
       </td>
     </tr>

@@ -1,6 +1,5 @@
-import React, { FC, useCallback, useMemo } from 'react';
-import { Card, Badge, Button, Table } from 'react-bootstrap';
-import { useAuthContext } from '../context/authContext';
+import React, { FC } from 'react';
+import { Table } from 'react-bootstrap';
 import { Product } from '../types';
 import { OrderedItem } from './OrderedItem';
 
@@ -30,10 +29,14 @@ export const UserCard: FC<UserCardProps> = ({ items, deleteItem }) => {
           <OrderedItem key={item.id} item={item} deleteItem={deleteItem} />
         ))}
         <tr>
-          <td>Total price</td>
+          <td>
+            <b>Total price</b>
+          </td>
           <td></td>
           <td></td>
-          <td>{sum.toFixed(2)}</td>
+          <td>
+            <b>{sum.toFixed(2)}</b>
+          </td>
         </tr>
       </tbody>
     </Table>
