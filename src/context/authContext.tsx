@@ -22,7 +22,7 @@ const getDataFromLocalStorage = () => {
   }
 };
 
-type AuthContextType = {
+export type AuthContextType = {
   user: UserState | null;
   logout: () => void;
   login: (email: string, password: string) => void;

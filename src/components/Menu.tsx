@@ -1,31 +1,49 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Badge, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
 import { ReactComponent as CardShopping } from '../icons/cart-shopping.svg';
+import { Product } from '../types';
+
+export const getSumOfItems = (products: Array<Product>) => {
+  return products.reduce((product, value) => product + value.amount, 0);
+};
 
 export const Menu = () => {
   const { user, logout } = useAuthContext();
-  const productsSum = user?.products.reduce(
-    (product, value) => product + value.amount,
-    0
-  );
+
+  const memoSumOfProducts = useMemo(() => {
+    return user && getSumOfItems(user.products);
+  }, [user?.products]);
 
   return (
-    <Navbar variant='dark' bg='dark' expand='lg'>
+    <Navbar variant='dark' bg='dark' expand='lg' data-testid='menu'>
       <Container fluid className='px-4 gap-4'>
-        <Navbar.Brand>
-          <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+        <Navbar.Brand data-testid='brand'>
+          <Link
+            to='/'
+            style={{ textDecoration: 'none', color: 'white' }}
+            data-testid='brand-link'>
             PizzaLove
           </Link>
         </Navbar.Brand>
         {!user && (
           <>
             <Nav className='ms-auto'>
-              <Nav.Link href='/login'>Login</Nav.Link>
+              <Link
+                to='/login'
+                data-testid='login'
+                style={{ textDecoration: 'none', color: 'white' }}>
+                Login
+              </Link>
             </Nav>
             <Nav>
-              <Nav.Link href='/register'>Register</Nav.Link>
+              <Link
+                to='/register'
+                data-testid='register'
+                style={{ textDecoration: 'none', color: 'white' }}>
+                Register
+              </Link>
             </Nav>
           </>
         )}
@@ -33,39 +51,54 @@ export const Menu = () => {
         {user && (
           <>
             <Nav className='ms-auto pe-2'>
-              <Link to='/my-card' style={{ position: 'relative' }}>
+              <Link
+                to='/my-card'
+                style={{ position: 'relative' }}
+                data-testid='my-card-link'>
                 <CardShopping width='18px' />
                 {user.products.length > 0 && (
                   <Badge
                     pill
                     bg='warning'
                     text='dark'
-                    style={{ fontSize: '8px', position: 'absolute' }}>
-                    +{productsSum}
+                    style={{ fontSize: '8px', position: 'absolute' }}
+                    data-testid='badge'>
+                    +{memoSumOfProducts}
                   </Badge>
                 )}
               </Link>
             </Nav>
 
-            <Navbar.Toggle aria-controls='responsive-navbar-dark-example' />
+            <Navbar.Toggle
+              aria-controls='responsive-navbar-dark-example'
+              data-testid='menu-toggle'
+            />
             <Navbar.Collapse
               id='responsive-navbar-dark'
               className='flex-grow-0 mr-auto'>
               <Nav className=''>
                 <NavDropdown
+                  data-testid='menu-dropdown'
                   id='nav-dropdown-dark-example'
                   title='My account'
                   menuVariant='dark'
                   align='end'>
-                  <NavDropdown.Item href='#action/3.1'>
+                  <NavDropdown.Item
+                    href='#action/3.1'
+                    data-testid='menu-dropdown-item1'>
                     My profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item href='#action/3.2'>
+                  <NavDropdown.Item
+                    href='#action/3.2'
+                    data-testid='menu-dropdown-item2'>
                     Settings
                   </NavDropdown.Item>
 
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href='#action/3.3' onClick={logout}>
+                  <NavDropdown.Item
+                    href='#action/3.3'
+                    onClick={logout}
+                    data-testid='logout'>
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
