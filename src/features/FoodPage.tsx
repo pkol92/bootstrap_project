@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import { FoodCard } from '../components/Card';
 import { Confirmation } from '../components/Confirmation';
+import { ProtectedPage } from '../components/ProtectedPage';
 import { useAuthContext } from '../context/authContext';
 import { mockData } from '../mocks/mockData';
 import { Product } from '../types';
@@ -10,8 +10,6 @@ import { Product } from '../types';
 export const FoodPage = () => {
   const [toggle, setToggle] = useState(false);
   const { addProduct } = useAuthContext();
-  const { user } = useAuthContext();
-  const navigate = useNavigate();
 
   const displayConfirmation = () => {
     setToggle(true);
@@ -22,23 +20,22 @@ export const FoodPage = () => {
   };
 
   const handleOrder = (item: Product) => {
-    if (!user) {
-      navigate('/login');
-    } else {
-      displayConfirmation();
-      addProduct(item);
-    }
+    displayConfirmation();
+    addProduct(item);
   };
+
   return (
-    <Container className='mt-5'>
-      <Row className='d-flex align-content-center justify-content-xxl-center'>
-        {mockData.map((item) => (
-          <Col key={item.id} xs={12} md={6} lg={3} className='mb-4'>
-            <FoodCard item={item} addItem={() => handleOrder(item)} />
-          </Col>
-        ))}
-      </Row>
-      {toggle && <Confirmation toggle={setToggle} />}
-    </Container>
+    <ProtectedPage>
+      <Container className='mt-5'>
+        <Row className='d-flex align-content-center justify-content-xxl-center'>
+          {mockData.map((item) => (
+            <Col key={item.id} xs={12} md={6} lg={3} className='mb-4'>
+              <FoodCard item={item} addItem={() => handleOrder(item)} />
+            </Col>
+          ))}
+        </Row>
+        {toggle && <Confirmation toggle={setToggle} />}
+      </Container>
+    </ProtectedPage>
   );
 };

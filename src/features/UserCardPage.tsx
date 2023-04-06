@@ -1,23 +1,15 @@
-import React, { useEffect } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import { useNavigate } from 'react-router';
-
+import React from 'react';
+import { Container, Row } from 'react-bootstrap';
 import { Menu } from '../components/Menu';
+import { ProtectedPage } from '../components/ProtectedPage';
 import { UserCard } from '../components/UserCard';
 import { useAuthContext } from '../context/authContext';
 
 export const UserCardPage = () => {
   const { user, deleteProduct } = useAuthContext();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
-  }, []);
 
   return (
-    <>
+    <ProtectedPage>
       <Menu />
       <Container className='p-2 p-md-5' fluid>
         <Row className='d-flex align-content-center justify-content-center p-4'>
@@ -30,6 +22,6 @@ export const UserCardPage = () => {
           )}
         </Row>
       </Container>
-    </>
+    </ProtectedPage>
   );
 };
