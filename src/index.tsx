@@ -20,32 +20,24 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <App />,
-//   },
-//   {
-//     path: '/my-card',
-//     element: <UserCardPage />,
-//   },
-//   { path: '/register', element: <RegisterPage /> },
-//   { path: '/login', element: <LoginPage /> },
-// ]);
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+  },
+  {
+    path: '/my-card',
+    element: <UserCardPage />,
+  },
+  { path: '/register', element: <RegisterPage /> },
+  { path: '/login', element: <LoginPage /> },
+]);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthContextProvider>
-        {/* <RouterProvider router={router} /> */}
-        <Routes>
-          <Route path='/' element={<App />} />
-          <Route path='/my-card' element={<UserCardPage />} />
-          <Route path='/register' element={<RegisterPage />} />
-          <Route path='/login' element={<LoginPage />} />
-        </Routes>
-      </AuthContextProvider>
-    </BrowserRouter>
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
   </React.StrictMode>
 );
 

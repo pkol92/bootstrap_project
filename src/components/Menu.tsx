@@ -1,5 +1,6 @@
 import React from 'react';
 import { Badge, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
 
 import { ReactComponent as CardShopping } from '../icons/cart-shopping.svg';
@@ -10,7 +11,11 @@ export const Menu = () => {
   return (
     <Navbar variant='dark' bg='dark' expand='lg'>
       <Container fluid className='px-4 gap-4'>
-        <Navbar.Brand href='/'>PizzaLove</Navbar.Brand>
+        <Navbar.Brand>
+          <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+            PizzaLove
+          </Link>
+        </Navbar.Brand>
         {!user && (
           <>
             <Nav className='ms-auto'>
@@ -24,8 +29,8 @@ export const Menu = () => {
 
         {user && (
           <>
-            <Nav className='ms-auto'>
-              <Nav.Link style={{ position: 'relative' }} href='/my-card'>
+            <Nav className='ms-auto pe-2'>
+              <Link to='/my-card' style={{ position: 'relative' }}>
                 <CardShopping width='18px' />
                 {user.products.length > 0 && (
                   <Badge
@@ -36,7 +41,7 @@ export const Menu = () => {
                     +{user?.products.length}
                   </Badge>
                 )}
-              </Nav.Link>
+              </Link>
             </Nav>
 
             <Navbar.Toggle aria-controls='responsive-navbar-dark-example' />
@@ -57,7 +62,7 @@ export const Menu = () => {
                   </NavDropdown.Item>
 
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href='#action/3.3' onClick={() => logout()}>
+                  <NavDropdown.Item href='#action/3.3' onClick={logout}>
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>

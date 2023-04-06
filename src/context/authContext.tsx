@@ -46,7 +46,6 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const login = (email: string, password: string) => {
     if (email === mockUser.email && password === mockUser.password) {
       localStorage.setItem(LOCALSTORAGE_KEY_NAME, mockUser.email);
-      console.log('user login');
       setUser(mockUser);
     }
   };
@@ -72,13 +71,14 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         (item) => item?.id !== newProduct.id
       );
 
-      const amountItem: Product = {
-        ...newProduct,
-        amount: searchProduct ? (searchProduct.amount += 1) : newProduct.amount,
-      };
+      const amountItem: Product = searchProduct
+        ? {
+            ...newProduct,
+            amount: (searchProduct.amount += 1),
+          }
+        : newProduct;
       const products = [...filteredProducts, amountItem];
       setUser({ ...user, products: products });
-      console.log('dodano', user.products);
     }
   };
 
