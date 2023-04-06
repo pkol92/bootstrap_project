@@ -2,11 +2,14 @@ import React from 'react';
 import { Badge, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
-
 import { ReactComponent as CardShopping } from '../icons/cart-shopping.svg';
 
 export const Menu = () => {
   const { user, logout } = useAuthContext();
+  const productsSum = user?.products.reduce(
+    (product, value) => product + value.amount,
+    0
+  );
 
   return (
     <Navbar variant='dark' bg='dark' expand='lg'>
@@ -38,7 +41,7 @@ export const Menu = () => {
                     bg='warning'
                     text='dark'
                     style={{ fontSize: '8px', position: 'absolute' }}>
-                    +{user?.products.length}
+                    +{productsSum}
                   </Badge>
                 )}
               </Link>
