@@ -11,10 +11,10 @@ export const getSumOfItems = (products: Array<Product>) => {
 
 export const Menu = () => {
   const { user, logout } = useAuthContext();
-  const productsSum = user?.products.reduce(
-    (product, value) => product + value.amount,
-    0
-  );
+
+  const memoSumOfProducts = useMemo(() => {
+    return user && getSumOfItems(user.products);
+  }, [user?.products]);
 
   const memoSumOfProducts = useMemo(() => {
     return user && getSumOfItems(user.products);
