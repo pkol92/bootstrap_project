@@ -16,10 +16,6 @@ export const Menu = () => {
     return user && getSumOfItems(user.products);
   }, [user?.products]);
 
-  const memoSumOfProducts = useMemo(() => {
-    return user && getSumOfItems(user.products);
-  }, [user?.products]);
-
   return (
     <Navbar variant='dark' bg='dark' expand='lg' data-testid='menu'>
       <Container fluid className='px-4 gap-4'>
