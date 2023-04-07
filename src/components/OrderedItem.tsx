@@ -13,11 +13,17 @@ export const OrderedItem = memo(function OrderITem({
 }: {
   item: Product;
 }) {
-  const memoCalculatePrice = useCallback((price: number, amount: number) => {
-    return calculatePrice(price, amount);
-  }, []);
-
   const { changeAmount, deleteProduct } = useAuthContext();
+
+  const memoCalculatePrice = useCallback(
+    () => calculatePrice(item.price, item.amount),
+    [item.price, item.amount]
+  );
+
+  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newAmount = Number(event.target.value);
+    changeAmount(item, newAmount);
+  };
 
   return (
     <tr key={item.id} data-testid='item-row'>
@@ -30,15 +36,11 @@ export const OrderedItem = memo(function OrderITem({
           max={99}
           step={1}
           type='number'
-          onChange={(e) => {
-            changeAmount(item, +e.target.value);
-          }}
+          onChange={handleAmountChange}
           data-testid='item-amount-input'
         />
       </td>
-      <td data-testid='item-price-sum'>
-        {memoCalculatePrice(item.price, item.amount)}$
-      </td>
+      <td data-testid='item-price-sum'>{memoCalculatePrice()}$</td>
       <td className='mt-auto font-weight-bold'>
         <Button
           onClick={() => deleteProduct(item)}

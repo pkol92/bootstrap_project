@@ -15,6 +15,30 @@ jest.mock('react-router', () => ({
   useNavigate: () => mockedFunction,
 }));
 
+const pizza = {
+  id: 1,
+  name: 'Pizza',
+  price: 2.99,
+  description: 'Tasty food, Tasty food, Tasty food, Tasty food',
+  amount: 1,
+};
+
+const chicken = {
+  id: 2,
+  name: 'Chicken with rice',
+  price: 1.99,
+  description: 'Tasty food, Tasty food, Tasty food, Tasty food',
+  amount: 1,
+};
+
+const fries = {
+  id: 5,
+  name: 'Fries',
+  price: 2.05,
+  description: 'Tasty food, Tasty food, Tasty food, Tasty food',
+  amount: 1,
+};
+
 const MockMenu = ({ mockedUser }: { mockedUser: UserState | null }) => {
   const [user, setUser] = useState(mockedUser);
   const logout = () => {
@@ -121,14 +145,6 @@ describe('Menu', () => {
   });
 
   test('badge shows number of 1 product', () => {
-    const pizza = {
-      id: 1,
-      name: 'Pizza',
-      price: 2.99,
-      description: 'Tasty food, Tasty food, Tasty food, Tasty food',
-      amount: 1,
-    };
-
     render(<MockMenu mockedUser={{ ...mockUser, products: [pizza] }} />);
 
     expect(screen.getByTestId('badge')).toBeInTheDocument();
@@ -136,64 +152,6 @@ describe('Menu', () => {
   });
 
   test('badge shows number of 3 products', () => {
-    const pizza = {
-      id: 1,
-      name: 'Pizza',
-      price: 2.99,
-      description: 'Tasty food, Tasty food, Tasty food, Tasty food',
-      amount: 1,
-    };
-
-    const chicken = {
-      id: 2,
-      name: 'Chicken with rice',
-      price: 1.99,
-      description: 'Tasty food, Tasty food, Tasty food, Tasty food',
-      amount: 1,
-    };
-
-    const fries = {
-      id: 5,
-      name: 'Fries',
-      price: 2.05,
-      description: 'Tasty food, Tasty food, Tasty food, Tasty food',
-      amount: 1,
-    };
-
-    render(
-      <MockMenu
-        mockedUser={{ ...mockUser, products: [pizza, chicken, fries] }}
-      />
-    );
-    expect(screen.getByTestId('badge')).toBeInTheDocument();
-    expect(screen.getByTestId('badge').textContent).toEqual(`+3`);
-  });
-
-  test('badge shows the number of 3 products with different quantities', () => {
-    const pizza = {
-      id: 1,
-      name: 'Pizza',
-      price: 2.99,
-      description: 'Tasty food, Tasty food, Tasty food, Tasty food',
-      amount: 1,
-    };
-
-    const chicken = {
-      id: 2,
-      name: 'Chicken with rice',
-      price: 1.99,
-      description: 'Tasty food, Tasty food, Tasty food, Tasty food',
-      amount: 2,
-    };
-
-    const fries = {
-      id: 5,
-      name: 'Fries',
-      price: 2.05,
-      description: 'Tasty food, Tasty food, Tasty food, Tasty food',
-      amount: 5,
-    };
-
     render(
       <MockMenu
         mockedUser={{ ...mockUser, products: [pizza, chicken, fries] }}
@@ -201,6 +159,29 @@ describe('Menu', () => {
     );
 
     const amounts = pizza.amount + chicken.amount + fries.amount;
+
+    expect(screen.getByTestId('badge')).toBeInTheDocument();
+    expect(screen.getByTestId('badge').textContent).toEqual(`+${amounts}`);
+  });
+
+  test('badge shows the number of 3 products with different quantities', () => {
+    const chicken2 = {
+      ...chicken,
+      amount: 2,
+    };
+
+    const fries5 = {
+      ...fries,
+      amount: 5,
+    };
+
+    render(
+      <MockMenu
+        mockedUser={{ ...mockUser, products: [pizza, chicken2, fries5] }}
+      />
+    );
+
+    const amounts = pizza.amount + chicken2.amount + fries5.amount;
     expect(screen.getByTestId('badge')).toBeInTheDocument();
     expect(screen.getByTestId('badge').textContent).toEqual(`+${amounts}`);
   });
