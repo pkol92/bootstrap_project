@@ -6,7 +6,7 @@ import { UserCard } from '../components/UserCard';
 import { useAuthContext } from '../context/authContext';
 
 export const UserCardPage = () => {
-  const { user, deleteProduct } = useAuthContext();
+  const { user } = useAuthContext();
 
   return (
     <ProtectedPage>
@@ -14,7 +14,7 @@ export const UserCardPage = () => {
       <Container className='p-2 p-md-5' fluid>
         <Row className='d-flex align-content-center justify-content-center p-4'>
           {user && user.products.length > 0 ? (
-            <UserCard items={user.products} deleteItem={deleteProduct} />
+            <UserCard items={user.products} />
           ) : (
             <h1 className='d-flex align-content-center justify-content-center'>
               Your card is empty

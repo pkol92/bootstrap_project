@@ -5,10 +5,9 @@ import { OrderedItem } from './OrderedItem';
 
 interface UserCardProps {
   items: Array<Product>;
-  deleteItem: (item: Product) => void;
 }
 
-export const UserCard: FC<UserCardProps> = ({ items, deleteItem }) => {
+export const UserCard: FC<UserCardProps> = ({ items }) => {
   let sum = 0;
   for (let i = 0; i < items.length; i++) {
     const productSum = items[i].price * items[i].amount;
@@ -26,7 +25,7 @@ export const UserCard: FC<UserCardProps> = ({ items, deleteItem }) => {
       </thead>
       <tbody>
         {items.map((item) => (
-          <OrderedItem key={item.id} item={item} deleteItem={deleteItem} />
+          <OrderedItem key={item.id} item={item} />
         ))}
         <tr>
           <td>

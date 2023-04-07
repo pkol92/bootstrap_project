@@ -43,15 +43,17 @@ export const LoginForm = () => {
       noValidate
       validated={validated}
       onSubmit={handleSubmit}
-      id='loginForm'>
+      id='loginForm'
+      data-testid='login-form'>
       <Form.Group controlId='formBasicEmail' className='mb-3'>
         <Form.Control
           required
           type='email'
           placeholder='Email address'
           onChange={handleChangeInfo('email')}
+          data-testid='email-input'
         />
-        <Form.Control.Feedback type='invalid'>
+        <Form.Control.Feedback type='invalid' data-testid='email-error'>
           Email is required
         </Form.Control.Feedback>
       </Form.Group>
@@ -62,13 +64,18 @@ export const LoginForm = () => {
           type='password'
           placeholder='Password'
           onChange={handleChangeInfo('password')}
+          data-testid='password-input'
         />
-        <Form.Control.Feedback type='invalid'>
+        <Form.Control.Feedback type='invalid' data-testid='password-error'>
           Password is required
         </Form.Control.Feedback>
       </Form.Group>
       <Row className='g-0'>
-        <Button variant='primary' type='submit' className='ms-auto mt-4'>
+        <Button
+          variant='primary'
+          type='submit'
+          className='ms-auto mt-4'
+          data-testid='submit-button'>
           Log in
         </Button>
       </Row>

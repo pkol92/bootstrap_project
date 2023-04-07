@@ -4,23 +4,25 @@ import { useAuthContext } from '../context/authContext';
 import { Product } from '../types';
 import { ReactComponent as RemoveIcon } from '../icons/remove-icon.svg';
 
+export const calculatePrice = (price: number, amount: number) => {
+  return (price * amount).toFixed(2);
+};
+
 export const OrderedItem = memo(function OrderITem({
   item,
-  deleteItem,
 }: {
   item: Product;
-  deleteItem: (item: Product) => void;
 }) {
   const memoCalculatePrice = useCallback((price: number, amount: number) => {
-    return (price * amount).toFixed(2);
+    return calculatePrice(price, amount);
   }, []);
 
-  const { changeAmount } = useAuthContext();
+  const { changeAmount, deleteProduct } = useAuthContext();
 
   return (
-    <tr key={item.id}>
-      <td>{item.name}</td>
-      <td>{item.price.toFixed(2)}$</td>
+    <tr key={item.id} data-testid='item-row'>
+      <td data-testid='item-name'>{item.name}</td>
+      <td data-testid='item-price'>{item.price.toFixed(2)}$</td>
       <td>
         <input
           defaultValue={item.amount}
@@ -31,11 +33,18 @@ export const OrderedItem = memo(function OrderITem({
           onChange={(e) => {
             changeAmount(item, +e.target.value);
           }}
+          data-testid='item-amount-input'
         />
       </td>
-      <td>{memoCalculatePrice(item.price, item.amount)}$</td>
+      <td data-testid='item-price-sum'>
+        {memoCalculatePrice(item.price, item.amount)}$
+      </td>
       <td className='mt-auto font-weight-bold'>
-        <Button onClick={() => deleteItem(item)} variant='link' size='sm'>
+        <Button
+          onClick={() => deleteProduct(item)}
+          variant='link'
+          size='sm'
+          data-testid='delete-button'>
           <RemoveIcon width={13} height={13} />
         </Button>
       </td>
