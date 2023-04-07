@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable no-empty-function */
 import {
   createContext,
   PropsWithChildren,
@@ -14,13 +12,10 @@ import { Product, UserState } from '../types';
 
 const LOCALSTORAGE_KEY_NAME = 'email';
 
-const getDataFromLocalStorage = () => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem(LOCALSTORAGE_KEY_NAME);
-  } else {
-    return null;
-  }
-};
+const getDataFromLocalStorage = () =>
+  typeof window !== 'undefined'
+    ? localStorage.getItem(LOCALSTORAGE_KEY_NAME)
+    : null;
 
 export type AuthContextType = {
   user: UserState | null;
@@ -50,61 +45,52 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    const userEmail = getDataFromLocalStorage();
-    if (userEmail === mockUser.email) {
-      login(mockUser.email, mockUser.password);
-    }
-  }, []);
-
   const logout = () => {
     localStorage.removeItem(LOCALSTORAGE_KEY_NAME);
     setUser(null);
   };
 
   const addProduct = (newProduct: Product) => {
-    if (user) {
-      const searchProduct = user.products.find(
-        (item) => item.id === newProduct.id
-      );
-      const filteredProducts = user.products.filter(
-        (item) => item?.id !== newProduct.id
-      );
+    if (!user) return;
+    const products = user.products;
+    const productIndex = products.findIndex(
+      (item) => item.id === newProduct.id
+    );
 
-      const amountItem: Product = searchProduct
-        ? {
-            ...newProduct,
-            amount: (searchProduct.amount += 1),
-          }
-        : newProduct;
-      const products = [...filteredProducts, amountItem];
-      setUser({ ...user, products: products });
+    if (productIndex > -1) {
+      products[productIndex].amount += 1;
+    } else {
+      products.push({ ...newProduct, amount: 1 });
     }
+    setUser({ ...user, products });
   };
 
   const changeAmount = (product: Product, amount: number) => {
-    if (user) {
-      const productIndex = user.products.indexOf(product);
+    if (!user) return;
 
-      const amountItem: Product = {
-        ...product,
-        amount: (product.amount = amount),
-      };
+    const products = [...user.products];
+    const productIndex = products.findIndex((item) => item.id === product.id);
 
-      const updateProducts = [...user.products];
-      updateProducts.splice(productIndex, 1, amountItem);
-
-      setUser({ ...user, products: updateProducts });
+    if (productIndex > -1) {
+      products[productIndex].amount = amount;
+      setUser({ ...user, products });
     }
   };
 
   const deleteProduct = (product: Product) => {
-    if (user) {
-      const products = user.products.filter((item) => item?.id !== product.id);
+    if (!user) return;
 
-      setUser({ ...user, products: products });
-    }
+    const products = user.products.filter((item) => item?.id !== product.id);
+
+    setUser({ ...user, products: products });
   };
+
+  useEffect(() => {
+    const userEmail = getDataFromLocalStorage();
+    if (userEmail === mockUser.email) {
+      login(mockUser.email, mockUser.password);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider
