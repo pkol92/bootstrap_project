@@ -13,8 +13,9 @@ export const Menu = () => {
   const { user, logout } = useAuthContext();
 
   const memoSumOfProducts = useMemo(() => {
-    return user && getSumOfItems(user.products);
-  }, [user?.products]);
+    const { products } = user || { products: [] };
+    return getSumOfItems(products);
+  }, [user]);
 
   return (
     <Navbar variant='dark' bg='dark' expand='lg' data-testid='menu'>
