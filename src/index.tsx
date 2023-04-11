@@ -15,6 +15,7 @@ import {
 import { UserCardPage } from './features/UserCardPage';
 import { RegisterPage } from './features/RegisterPage';
 import { LoginPage } from './features/LoginPage';
+import { ProductsContextProvider } from './context/productsContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -36,7 +37,9 @@ const router = createBrowserRouter([
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <RouterProvider router={router} />
+      <ProductsContextProvider>
+        <RouterProvider router={router} />
+      </ProductsContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

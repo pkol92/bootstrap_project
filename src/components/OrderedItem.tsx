@@ -1,8 +1,8 @@
 import React, { memo, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
-import { useAuthContext } from '../context/authContext';
 import { Product } from '../types';
 import { ReactComponent as RemoveIcon } from '../icons/remove-icon.svg';
+import { useProductsContext } from '../context/productsContext';
 
 export const calculatePrice = (price: number, amount: number) => {
   return (price * amount).toFixed(2);
@@ -13,7 +13,7 @@ export const OrderedItem = memo(function OrderITem({
 }: {
   item: Product;
 }) {
-  const { changeAmount, deleteProduct } = useAuthContext();
+  const { changeAmount, deleteProduct } = useProductsContext();
 
   const memoCalculatePrice = useCallback(
     () => calculatePrice(item.price, item.amount),
