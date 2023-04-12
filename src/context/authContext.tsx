@@ -6,9 +6,11 @@ import {
   useState,
   useEffect,
   useContext,
+  useCallback,
 } from 'react';
 import { mockUser } from '../mocks/moskUser';
-import { Product, UserState } from '../types';
+import { UserState } from '../types';
+import { useProductsContext } from './productsContext';
 
 const LOCALSTORAGE_KEY_NAME = 'email';
 
@@ -33,13 +35,17 @@ export const AuthContext = createContext<AuthContextType>({
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<UserState | null>(null);
+  const { products } = useProductsContext();
 
-  const login = (email: string, password: string) => {
-    if (email === mockUser.email && password === mockUser.password) {
-      localStorage.setItem(LOCALSTORAGE_KEY_NAME, mockUser.email);
-      setUser(mockUser);
-    }
-  };
+  const login = useCallback(
+    (email: string, password: string) => {
+      if (email === mockUser.email && password === mockUser.password) {
+        localStorage.setItem(LOCALSTORAGE_KEY_NAME, mockUser.email);
+        setUser({ ...mockUser, products: products });
+      }
+    },
+    [products]
+  );
 
   const logout = () => {
     localStorage.removeItem(LOCALSTORAGE_KEY_NAME);
@@ -51,7 +57,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     if (userEmail === mockUser.email) {
       login(mockUser.email, mockUser.password);
     }
-  }, []);
+  }, [login]);
 
   return (
     <AuthContext.Provider

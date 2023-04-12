@@ -3,13 +3,15 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { FoodCard } from '../components/Card';
 import { Confirmation } from '../components/Confirmation';
 import { ProtectedPage } from '../components/ProtectedPage';
-import { useProductsContext } from '../context/productsContext';
+import { useAuthContext } from '../context/authContext';
+import { useDispatchContext } from '../context/productsContext';
 import { mockData } from '../mocks/mockData';
 import { Product } from '../types';
 
 export const FoodPage = () => {
   const [toggle, setToggle] = useState(false);
-  const { addProduct } = useProductsContext();
+  const { user } = useAuthContext();
+  const dispatch = useDispatchContext();
 
   const displayConfirmation = () => {
     setToggle(true);
@@ -19,9 +21,17 @@ export const FoodPage = () => {
     }, 2000);
   };
 
-  const handleOrder = (item: Product) => {
+  const handleOrder = (newProduct: Product) => {
     displayConfirmation();
-    addProduct(item);
+    if (!user) return;
+
+    const product = user.products.find((item) => item.id === newProduct.id);
+
+    if (product) {
+      dispatch({ type: 'UPDATE', payload: { product: newProduct } });
+    } else {
+      dispatch({ type: 'ADD', payload: newProduct });
+    }
   };
 
   return (
