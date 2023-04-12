@@ -1,6 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+
 import '@testing-library/jest-dom';
 import { getSumOfItems } from '../components/Menu';
 

@@ -5,15 +5,13 @@ import { OrderedItem } from './OrderedItem';
 
 interface UserCardProps {
   items: Array<Product>;
-  deleteItem: (item: Product) => void;
 }
 
-export const UserCard: FC<UserCardProps> = ({ items, deleteItem }) => {
-  let sum = 0;
-  for (let i = 0; i < items.length; i++) {
-    const productSum = items[i].price * items[i].amount;
-    sum += productSum;
-  }
+export const UserCard: FC<UserCardProps> = ({ items }) => {
+  const totalSum = items
+    .reduce((acc, item) => acc + item.price * item.amount, 0)
+    .toFixed(2);
+
   return (
     <Table striped>
       <thead>
@@ -26,7 +24,7 @@ export const UserCard: FC<UserCardProps> = ({ items, deleteItem }) => {
       </thead>
       <tbody>
         {items.map((item) => (
-          <OrderedItem key={item.id} item={item} deleteItem={deleteItem} />
+          <OrderedItem key={item.id} item={item} />
         ))}
         <tr>
           <td>
@@ -35,7 +33,7 @@ export const UserCard: FC<UserCardProps> = ({ items, deleteItem }) => {
           <td></td>
           <td></td>
           <td>
-            <b>{sum.toFixed(2)}</b>
+            <b>{totalSum}</b>
           </td>
         </tr>
       </tbody>

@@ -1,26 +1,41 @@
 import React, { memo, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
-import { useAuthContext } from '../context/authContext';
 import { Product } from '../types';
 import { ReactComponent as RemoveIcon } from '../icons/remove-icon.svg';
+import {
+  useDispatchContext,
+  useProductsContext,
+} from '../context/productsContext';
+
+export const calculatePrice = (price: number, amount: number) => {
+  return (price * amount).toFixed(2);
+};
 
 export const OrderedItem = memo(function OrderITem({
   item,
-  deleteItem,
 }: {
   item: Product;
-  deleteItem: (item: Product) => void;
 }) {
-  const memoCalculatePrice = useCallback((price: number, amount: number) => {
-    return (price * amount).toFixed(2);
-  }, []);
+  const dispatch = useDispatchContext();
 
-  const { changeAmount } = useAuthContext();
+  const memoCalculatePrice = useCallback(
+    () => calculatePrice(item.price, item.amount),
+    [item.price, item.amount]
+  );
+
+  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newAmount = Number(event.target.value);
+    // changeAmount(item, newAmount);
+    dispatch({
+      type: 'UPDATE',
+      payload: { product: item, newAmount: newAmount },
+    });
+  };
 
   return (
-    <tr key={item.id}>
-      <td>{item.name}</td>
-      <td>{item.price.toFixed(2)}$</td>
+    <tr key={item.id} data-testid='item-row'>
+      <td data-testid='item-name'>{item.name}</td>
+      <td data-testid='item-price'>{item.price.toFixed(2)}$</td>
       <td>
         <input
           defaultValue={item.amount}
@@ -28,14 +43,17 @@ export const OrderedItem = memo(function OrderITem({
           max={99}
           step={1}
           type='number'
-          onChange={(e) => {
-            changeAmount(item, +e.target.value);
-          }}
+          onChange={handleAmountChange}
+          data-testid='item-amount-input'
         />
       </td>
-      <td>{memoCalculatePrice(item.price, item.amount)}$</td>
+      <td data-testid='item-price-sum'>{memoCalculatePrice()}$</td>
       <td className='mt-auto font-weight-bold'>
-        <Button onClick={() => deleteItem(item)} variant='link' size='sm'>
+        <Button
+          onClick={() => dispatch({ type: 'DELETE', payload: item })}
+          variant='link'
+          size='sm'
+          data-testid='delete-button'>
           <RemoveIcon width={13} height={13} />
         </Button>
       </td>
