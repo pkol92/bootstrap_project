@@ -1,10 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { FoodCard } from '../components/Card';
 import { OrderedItem } from '../components/OrderedItem';
-import { UserCard } from '../components/UserCard';
 import { AuthContext } from '../context/authContext';
 import { mockUser } from '../mocks/moskUser';
 import { useState } from 'react';
@@ -67,42 +64,5 @@ describe('OrderedItem component', () => {
     expect(screen.getByTestId('item-price-sum').textContent).toEqual(
       `${price}$`
     );
-  });
-
-  // test('has working button', async () => {
-  //   render(<MockOrderedItem />);
-  //   userEvent.click(screen.getByTestId('delete-button'));
-  //   await new Promise(process.nextTick);
-  //   expect(screen.queryByTestId('delete-button')).not.toBeInTheDocument();
-  //   expect(mockedFunction).toBeCalled();
-  // });
-
-  test('amount input is working ', async () => {
-    // const { getByTestId } = render(<MockOrderedItem />);
-    // const amountInput = getByTestId('item-amount-input');
-
-    // fireEvent.change(amountInput, { target: { value: '3' } });
-
-    // expect(amountInput.value).toBe('3');
-
-    // expect(getByTestId('item-price-sum')).toHaveTextContent('29.97$');
-
-    render(<MockOrderedItem />);
-    const amountInput = screen.getByTestId(
-      'item-amount-input'
-    ) as HTMLInputElement;
-
-    // const price = mockItem.amount * mockItem.price * 3;
-
-    fireEvent.change(amountInput, { target: { value: 3 } });
-    expect(amountInput.value).toBe('3');
-    // expect(screen.getByTestId('item-price-sum')).toHaveTextContent(`${price}$`);
-
-    // expect(mockedFunction).toBeCalled();
-    // await waitFor(() => {
-    //   expect(screen.getByTestId('item-price-sum').textContent).toEqual(
-    //     `${price}$`
-    //   );
-    // });
   });
 });
