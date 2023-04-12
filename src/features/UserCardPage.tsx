@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Menu } from '../components/Menu';
 import { ProtectedPage } from '../components/ProtectedPage';
@@ -10,13 +9,15 @@ export const UserCardPage = () => {
 
   return (
     <ProtectedPage>
-      <Menu />
-      <Container className='p-2 p-md-5' fluid>
+      <Menu data-testid='menu' />
+      <Container className='p-2 p-md-5' fluid data-testid='container'>
         <Row className='d-flex align-content-center justify-content-center p-4'>
           {user && user.products.length > 0 ? (
-            <UserCard items={user.products} />
+            <UserCard items={user.products} data-testid='cards' />
           ) : (
-            <h1 className='d-flex align-content-center justify-content-center'>
+            <h1
+              className='d-flex align-content-center justify-content-center'
+              data-testid='empty-card-info'>
               Your card is empty
             </h1>
           )}

@@ -1,17 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { debug } from 'console';
-import { useReducer, useState } from 'react';
 import { UserCard } from '../components/UserCard';
-import { AuthContext } from '../context/authContext';
-import {
-  ProductsContext,
-  ProductsContextProvider,
-  ProductsDispatchContext,
-} from '../context/productsContext';
-import { mockUser } from '../mocks/moskUser';
-const mockedFunction = jest.fn();
+
 const mockProducts = [
   {
     id: 3,
@@ -29,35 +19,6 @@ const mockProducts = [
   },
 ];
 
-// const state = { products: mockProducts };
-// const dispatch = jest.fn();
-
-// const MockUserCard = () => {
-//   const [user, setUser] = useState({ ...mockUser, products: mockProducts });
-
-//   const value = {
-//     logout: mockedFunction,
-//     user: user,
-//     login: mockedFunction,
-//     setUser: mockedFunction,
-//   };
-
-//   return (
-//     <ProductsContext.Provider value={state}>
-//       <ProductsDispatchContext.Provider value={dispatch}>
-//         <AuthContext.Provider value={value}>
-//           <UserCard items={user.products} />
-//         </AuthContext.Provider>
-//       </ProductsDispatchContext.Provider>
-//     </ProductsContext.Provider>
-//   );
-// };
-
-// const mockUseContext = jest
-//   .fn()
-//   .mockImplementation(() => ({ state, dispatch }));
-// React.useContext(mockUseContext);
-
 describe('UserCard', () => {
   test('is render', () => {
     render(<UserCard items={mockProducts} />);
@@ -70,15 +31,6 @@ describe('UserCard', () => {
     expect(screen.getByTestId('table-body')).toBeInTheDocument();
     expect(screen.getByTestId('table-price-sum')).toBeInTheDocument();
   });
-
-  //   test('is not showing product after remove action', async () => {
-  //     render(<UserCard items={mockProducts} />);
-  //     const firstDeleteButton = screen.getAllByRole('button')[1];
-  //     userEvent.click(firstDeleteButton);
-  //     await new Promise(process.nextTick);
-  //     // // expect(mockedFunction).toBeCalled();
-  //     expect(screen.queryByText('Fries')).not.toBeInTheDocument();
-  //   });
 
   test('shows total price of all products', () => {
     render(<UserCard items={mockProducts} />);

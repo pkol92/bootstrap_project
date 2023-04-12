@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
@@ -34,12 +34,8 @@ const mockProducts = [
 
 const MockFoodPage = ({ mockedUser }: { mockedUser: UserState | null }) => {
   const [user, setUser] = useState(mockedUser);
-  const logout = () => {
-    setUser(null);
-  };
-
   const value = {
-    logout: logout,
+    logout: mockedFunction,
     user: user,
     login: mockedFunction,
     setUser: setUser,
@@ -87,5 +83,20 @@ describe('Food page', () => {
     userEvent.click(pizzaOrderButton);
     await new Promise(process.nextTick);
     expect(screen.queryByTestId('confirmation')).toBeInTheDocument();
+  });
+
+  test('shows confirmation toast, which is disappears after 2s', async () => {
+    render(<MockFoodPage mockedUser={mockUser} />);
+
+    const pizzaOrderButton = screen.getAllByText('Order')[0];
+    userEvent.click(pizzaOrderButton);
+    await new Promise(process.nextTick);
+    expect(screen.queryByTestId('confirmation')).toBeInTheDocument();
+    await waitFor(
+      () => {
+        expect(screen.queryByTestId('confirmation')).not.toBeInTheDocument();
+      },
+      { timeout: 2000 }
+    );
   });
 });
