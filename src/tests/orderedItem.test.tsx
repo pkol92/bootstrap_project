@@ -5,6 +5,7 @@ import { OrderedItem } from '../components/OrderedItem';
 import { AuthContext } from '../context/authContext';
 import { mockUser } from '../mocks/moskUser';
 import { useState } from 'react';
+import userEvent from '@testing-library/user-event';
 
 const mockedFunction = jest.fn();
 const mockItem = {
@@ -21,16 +22,13 @@ const MockOrderedItem = () => {
     logout: mockedFunction,
     user: user,
     login: mockedFunction,
-    addProduct: mockedFunction,
-    deleteProduct: mockedFunction,
-    changeAmount: mockedFunction,
     setUser: setUser,
   };
   return (
     <AuthContext.Provider value={value}>
       <table>
         <tbody>
-          <OrderedItem item={mockItem} />
+          <OrderedItem item={mockItem} deleteItem={mockedFunction} />
         </tbody>
       </table>
     </AuthContext.Provider>
@@ -64,5 +62,13 @@ describe('OrderedItem component', () => {
     expect(screen.getByTestId('item-price-sum').textContent).toEqual(
       `${price}$`
     );
+  });
+
+  test('delete button can be clicked', async () => {
+    render(<MockOrderedItem />);
+
+    userEvent.click(screen.getByTestId('delete-button'));
+    await new Promise(process.nextTick);
+    expect(mockedFunction).toBeCalled();
   });
 });

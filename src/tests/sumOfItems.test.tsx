@@ -5,7 +5,7 @@ import { getSumOfItems } from '../components/Menu';
 
 const pizza = {
   id: 3,
-  name: 'Potato with vegetables',
+  name: 'Pizza',
   price: 0.99,
   description: 'Tasty food, Tasty food, Tasty food, Tasty food',
   amount: 1,

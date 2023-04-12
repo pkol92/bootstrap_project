@@ -10,8 +10,10 @@ export const calculatePrice = (price: number, amount: number) => {
 
 export const OrderedItem = memo(function OrderITem({
   item,
+  deleteItem,
 }: {
   item: Product;
+  deleteItem: () => void;
 }) {
   const dispatch = useDispatchContext();
 
@@ -46,7 +48,7 @@ export const OrderedItem = memo(function OrderITem({
       <td data-testid='item-price-sum'>{memoCalculatePrice()}$</td>
       <td className='mt-auto font-weight-bold'>
         <Button
-          onClick={() => dispatch({ type: 'DELETE', payload: item })}
+          onClick={() => deleteItem()}
           variant='link'
           size='sm'
           data-testid='delete-button'>
