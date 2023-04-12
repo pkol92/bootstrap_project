@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FoodCard } from '../components/Card';
 import { Confirmation } from '../components/Confirmation';
-import { ProtectedPage } from '../components/ProtectedPage';
 import { useAuthContext } from '../context/authContext';
 import { useDispatchContext } from '../context/productsContext';
-import { mockData } from '../mocks/mockData';
+import { mockData as mockProducts } from '../mocks/mockData';
 import { Product } from '../types';
 
 export const FoodPage = () => {
@@ -35,17 +34,15 @@ export const FoodPage = () => {
   };
 
   return (
-    <ProtectedPage>
-      <Container className='mt-5'>
-        <Row className='d-flex align-content-center justify-content-xxl-center'>
-          {mockData.map((item) => (
-            <Col key={item.id} xs={12} md={6} lg={3} className='mb-4'>
-              <FoodCard item={item} addItem={() => handleOrder(item)} />
-            </Col>
-          ))}
-        </Row>
-        {toggle && <Confirmation toggle={setToggle} />}
-      </Container>
-    </ProtectedPage>
+    <Container className='mt-5'>
+      <Row className='d-flex align-content-center justify-content-xxl-center'>
+        {mockProducts.map((item) => (
+          <Col key={item.id} xs={12} md={6} lg={3} className='mb-4'>
+            <FoodCard item={item} addItem={() => handleOrder(item)} />
+          </Col>
+        ))}
+      </Row>
+      {toggle && <Confirmation toggle={setToggle} />}
+    </Container>
   );
 };

@@ -2,10 +2,7 @@ import React, { memo, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import { Product } from '../types';
 import { ReactComponent as RemoveIcon } from '../icons/remove-icon.svg';
-import {
-  useDispatchContext,
-  useProductsContext,
-} from '../context/productsContext';
+import { useDispatchContext } from '../context/productsContext';
 
 export const calculatePrice = (price: number, amount: number) => {
   return (price * amount).toFixed(2);
@@ -25,7 +22,6 @@ export const OrderedItem = memo(function OrderITem({
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newAmount = Number(event.target.value);
-    // changeAmount(item, newAmount);
     dispatch({
       type: 'UPDATE',
       payload: { product: item, newAmount: newAmount },
