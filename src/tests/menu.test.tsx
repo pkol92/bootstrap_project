@@ -49,9 +49,6 @@ const MockMenu = ({ mockedUser }: { mockedUser: UserState | null }) => {
     logout: logout,
     user: user,
     login: mockedFunction,
-    addProduct: mockedFunction,
-    deleteProduct: mockedFunction,
-    changeAmount: mockedFunction,
     setUser: setUser,
   };
 

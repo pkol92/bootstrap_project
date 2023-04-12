@@ -2,10 +2,7 @@ import React, { memo, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import { Product } from '../types';
 import { ReactComponent as RemoveIcon } from '../icons/remove-icon.svg';
-import {
-  useDispatchContext,
-  useProductsContext,
-} from '../context/productsContext';
+import { useDispatchContext } from '../context/productsContext';
 
 export const calculatePrice = (price: number, amount: number) => {
   return (price * amount).toFixed(2);
@@ -13,8 +10,10 @@ export const calculatePrice = (price: number, amount: number) => {
 
 export const OrderedItem = memo(function OrderITem({
   item,
+  deleteItem,
 }: {
   item: Product;
+  deleteItem: () => void;
 }) {
   const dispatch = useDispatchContext();
 
@@ -25,7 +24,6 @@ export const OrderedItem = memo(function OrderITem({
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newAmount = Number(event.target.value);
-    // changeAmount(item, newAmount);
     dispatch({
       type: 'UPDATE',
       payload: { product: item, newAmount: newAmount },
@@ -50,7 +48,7 @@ export const OrderedItem = memo(function OrderITem({
       <td data-testid='item-price-sum'>{memoCalculatePrice()}$</td>
       <td className='mt-auto font-weight-bold'>
         <Button
-          onClick={() => dispatch({ type: 'DELETE', payload: item })}
+          onClick={() => deleteItem()}
           variant='link'
           size='sm'
           data-testid='delete-button'>

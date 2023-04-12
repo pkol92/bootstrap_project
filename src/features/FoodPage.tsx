@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router';
 import { FoodCard } from '../components/Card';
 import { Confirmation } from '../components/Confirmation';
-import { ProtectedPage } from '../components/ProtectedPage';
 import { useAuthContext } from '../context/authContext';
 import { useDispatchContext } from '../context/productsContext';
-import { mockData } from '../mocks/mockData';
 import { Product } from '../types';
 
-export const FoodPage = () => {
+export const FoodPage = memo(function FoodPage({
+  products,
+}: {
+  products: Array<Product>;
+}) {
   const [toggle, setToggle] = useState(false);
   const { user } = useAuthContext();
   const dispatch = useDispatchContext();
+  const navigate = useNavigate();
 
   const displayConfirmation = () => {
     setToggle(true);
@@ -22,30 +26,32 @@ export const FoodPage = () => {
   };
 
   const handleOrder = (newProduct: Product) => {
-    displayConfirmation();
-    if (!user) return;
-
-    const product = user.products.find((item) => item.id === newProduct.id);
-
-    if (product) {
-      dispatch({ type: 'UPDATE', payload: { product: newProduct } });
+    if (!user) {
+      navigate('/login');
     } else {
-      dispatch({ type: 'ADD', payload: newProduct });
+      displayConfirmation();
+      const product = user.products.find((item) => item.id === newProduct.id);
+
+      if (product) {
+        dispatch({ type: 'UPDATE', payload: { product: newProduct } });
+      } else {
+        dispatch({ type: 'ADD', payload: newProduct });
+      }
     }
   };
 
   return (
-    <ProtectedPage>
-      <Container className='mt-5'>
-        <Row className='d-flex align-content-center justify-content-xxl-center'>
-          {mockData.map((item) => (
-            <Col key={item.id} xs={12} md={6} lg={3} className='mb-4'>
-              <FoodCard item={item} addItem={() => handleOrder(item)} />
-            </Col>
-          ))}
-        </Row>
-        {toggle && <Confirmation toggle={setToggle} />}
-      </Container>
-    </ProtectedPage>
+    <Container className='mt-5' data-testid='container'>
+      <Row
+        className='d-flex align-content-center justify-content-xxl-center'
+        data-testid='products'>
+        {products.map((item) => (
+          <Col key={item.id} xs={12} md={6} lg={3} className='mb-4'>
+            <FoodCard item={item} addItem={() => handleOrder(item)} />
+          </Col>
+        ))}
+      </Row>
+      {toggle && <Confirmation toggle={setToggle} data-testid='confirmation' />}
+    </Container>
   );
-};
+});
